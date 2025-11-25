@@ -1,0 +1,35 @@
+{
+  "name": "coinmate-typescript-client",
+  "version": "1.0.0",
+  "description": "TypeScript/Node.js client for Coinmate.io API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/main.ts",
+    "dev": "ts-node-dev --respawn src/main.ts",
+    "example": "ts-node src/main.ts",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "coinmate",
+    "cryptocurrency",
+    "exchange",
+    "api",
+    "bitcoin",
+    "ethereum",
+    "trading"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  }
+}

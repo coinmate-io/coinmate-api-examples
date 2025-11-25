@@ -1,0 +1,22 @@
+{
+    "name": "coinmate/api-example",
+    "description": "PHP client for Coinmate API",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.2",
+        "guzzlehttp/guzzle": "^7.0",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Coinmate\\": "src/"
+        },
+        "classmap": [
+            "src/Types/Models.php"
+        ]
+    },
+    "scripts": {
+        "start": "php src/main.php"
+    }
+}
