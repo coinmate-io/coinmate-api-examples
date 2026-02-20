@@ -266,9 +266,6 @@ class CoinmateClient:
         price: str,
         client_order_id: Optional[str] = None,
         post_only: Optional[bool] = None,
-        stop_price: Optional[str] = None,
-        hidden: Optional[bool] = None,
-        trailing: Optional[bool] = None,
         immediate_or_cancel: Optional[bool] = None
     ) -> CoinmateResponse:
         """Place buy limit order"""
@@ -282,12 +279,6 @@ class CoinmateClient:
             params['clientOrderId'] = client_order_id
         if post_only is not None:
             params['postOnly'] = '1' if post_only else '0'
-        if stop_price:
-            params['stopPrice'] = stop_price
-        if hidden is not None:
-            params['hidden'] = '1' if hidden else '0'
-        if trailing is not None:
-            params['trailing'] = '1' if trailing else '0'
         if immediate_or_cancel is not None:
             params['immediateOrCancel'] = '1' if immediate_or_cancel else '0'
 
@@ -310,9 +301,6 @@ class CoinmateClient:
         price: str,
         client_order_id: Optional[str] = None,
         post_only: Optional[bool] = None,
-        stop_price: Optional[str] = None,
-        hidden: Optional[bool] = None,
-        trailing: Optional[bool] = None,
         immediate_or_cancel: Optional[bool] = None
     ) -> CoinmateResponse:
         """Place sell limit order"""
@@ -326,12 +314,6 @@ class CoinmateClient:
             params['clientOrderId'] = client_order_id
         if post_only is not None:
             params['postOnly'] = '1' if post_only else '0'
-        if stop_price:
-            params['stopPrice'] = stop_price
-        if hidden is not None:
-            params['hidden'] = '1' if hidden else '0'
-        if trailing is not None:
-            params['trailing'] = '1' if trailing else '0'
         if immediate_or_cancel is not None:
             params['immediateOrCancel'] = '1' if immediate_or_cancel else '0'
 

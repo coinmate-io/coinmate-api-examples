@@ -95,24 +95,20 @@ JsonObject cancelOrderWithInfo(String orderId)
 ```java
 // Place a buy limit order
 JsonObject buyLimit(String currencyPair, String amount, String price,
-                   String clientOrderId, Boolean postOnly, String stopPrice,
-                   Boolean hidden, Boolean trailing, Boolean immediateOrCancel)
+                   String clientOrderId, Boolean postOnly, Boolean immediateOrCancel)
 
 // Place a sell limit order
 JsonObject sellLimit(String currencyPair, String amount, String price,
-                    String clientOrderId, Boolean postOnly, String stopPrice,
-                    Boolean hidden, Boolean trailing, Boolean immediateOrCancel)
+                    String clientOrderId, Boolean postOnly, Boolean immediateOrCancel)
 
 // Replace order with buy limit
 JsonObject replaceByBuyLimit(String orderId, String currencyPair, String amount,
                             String price, String clientOrderId, Boolean postOnly,
-                            String stopPrice, Boolean hidden, Boolean trailing,
                             Boolean immediateOrCancel)
 
 // Replace order with sell limit
 JsonObject replaceBySellLimit(String orderId, String currencyPair, String amount,
                              String price, String clientOrderId, Boolean postOnly,
-                             String stopPrice, Boolean hidden, Boolean trailing,
                              Boolean immediateOrCancel)
 ```
 
@@ -266,9 +262,6 @@ try (CoinmateClient client = new CoinmateClient(config)) {
         "50000",          // price (50,000 EUR per BTC)
         null,             // no client order ID
         false,            // not post-only
-        null,             // no stop price
-        false,            // not hidden
-        false,            // not trailing
         false             // not immediate-or-cancel
     );
 

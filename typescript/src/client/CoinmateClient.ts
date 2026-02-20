@@ -257,9 +257,6 @@ export class CoinmateClient {
 
     if (request.clientOrderId) params.clientOrderId = request.clientOrderId;
     if (request.postOnly !== undefined) params.postOnly = request.postOnly ? '1' : '0';
-    if (request.stopPrice) params.stopPrice = request.stopPrice;
-    if (request.hidden !== undefined) params.hidden = request.hidden ? '1' : '0';
-    if (request.trailing !== undefined) params.trailing = request.trailing ? '1' : '0';
     if (request.immediateOrCancel !== undefined)
       params.immediateOrCancel = request.immediateOrCancel ? '1' : '0';
 
@@ -278,9 +275,6 @@ export class CoinmateClient {
 
     if (request.clientOrderId) params.clientOrderId = request.clientOrderId;
     if (request.postOnly !== undefined) params.postOnly = request.postOnly ? '1' : '0';
-    if (request.stopPrice) params.stopPrice = request.stopPrice;
-    if (request.hidden !== undefined) params.hidden = request.hidden ? '1' : '0';
-    if (request.trailing !== undefined) params.trailing = request.trailing ? '1' : '0';
     if (request.immediateOrCancel !== undefined)
       params.immediateOrCancel = request.immediateOrCancel ? '1' : '0';
 

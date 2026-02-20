@@ -165,9 +165,6 @@ JsonObject order = client.buyLimit(
     "50000",             // price
     null,                // clientOrderId (optional)
     false,               // postOnly
-    null,                // stopPrice
-    false,               // hidden
-    false,               // trailing
     false                // immediateOrCancel
 );
 
@@ -176,7 +173,7 @@ JsonObject sellOrder = client.sellLimit(
     "BTC_EUR",
     "0.001",
     "60000",
-    null, false, null, false, false, false
+    null, false, false
 );
 
 // Cancel an order

@@ -178,24 +178,20 @@ public class CoinmateTypedClient implements AutoCloseable {
      * @param price Price per unit
      */
     public CoinmateResponse<OrderResult> buyLimit(String currencyPair, String amount, String price) throws IOException {
-        return buyLimit(currencyPair, amount, price, null, null, null, null, null, null);
+        return buyLimit(currencyPair, amount, price, null, null, null);
     }
 
     /**
      * Place a buy limit order with all parameters.
      */
     public CoinmateResponse<OrderResult> buyLimit(String currencyPair, String amount, String price,
-                                                   String clientOrderId, Boolean postOnly, String stopPrice,
-                                                   Boolean hidden, Boolean trailing, Boolean immediateOrCancel) throws IOException {
+                                                   String clientOrderId, Boolean postOnly, Boolean immediateOrCancel) throws IOException {
         Map<String, String> params = new java.util.HashMap<>();
         params.put("currencyPair", currencyPair);
         params.put("amount", amount);
         params.put("price", price);
         if (clientOrderId != null) params.put("clientOrderId", clientOrderId);
         if (postOnly != null) params.put("postOnly", postOnly ? "1" : "0");
-        if (stopPrice != null) params.put("stopPrice", stopPrice);
-        if (hidden != null) params.put("hidden", hidden ? "1" : "0");
-        if (trailing != null) params.put("trailing", trailing ? "1" : "0");
         if (immediateOrCancel != null) params.put("immediateOrCancel", immediateOrCancel ? "1" : "0");
 
         JsonObject response = httpClient.postPrivate("/buyLimit", params);
@@ -211,24 +207,20 @@ public class CoinmateTypedClient implements AutoCloseable {
      * @param price Price per unit
      */
     public CoinmateResponse<OrderResult> sellLimit(String currencyPair, String amount, String price) throws IOException {
-        return sellLimit(currencyPair, amount, price, null, null, null, null, null, null);
+        return sellLimit(currencyPair, amount, price, null, null, null);
     }
 
     /**
      * Place a sell limit order with all parameters.
      */
     public CoinmateResponse<OrderResult> sellLimit(String currencyPair, String amount, String price,
-                                                    String clientOrderId, Boolean postOnly, String stopPrice,
-                                                    Boolean hidden, Boolean trailing, Boolean immediateOrCancel) throws IOException {
+                                                    String clientOrderId, Boolean postOnly, Boolean immediateOrCancel) throws IOException {
         Map<String, String> params = new java.util.HashMap<>();
         params.put("currencyPair", currencyPair);
         params.put("amount", amount);
         params.put("price", price);
         if (clientOrderId != null) params.put("clientOrderId", clientOrderId);
         if (postOnly != null) params.put("postOnly", postOnly ? "1" : "0");
-        if (stopPrice != null) params.put("stopPrice", stopPrice);
-        if (hidden != null) params.put("hidden", hidden ? "1" : "0");
-        if (trailing != null) params.put("trailing", trailing ? "1" : "0");
         if (immediateOrCancel != null) params.put("immediateOrCancel", immediateOrCancel ? "1" : "0");
 
         JsonObject response = httpClient.postPrivate("/sellLimit", params);

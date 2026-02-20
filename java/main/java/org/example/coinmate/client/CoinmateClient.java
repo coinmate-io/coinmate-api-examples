@@ -315,23 +315,16 @@ public class CoinmateClient implements AutoCloseable {
      * @param price Price per unit
      * @param clientOrderId Optional client order ID
      * @param postOnly Optional post only flag
-     * @param stopPrice Optional stop price
-     * @param hidden Optional hidden flag
-     * @param trailing Optional trailing flag
      * @param immediateOrCancel Optional immediate or cancel flag
      */
     public JsonObject buyLimit(String currencyPair, String amount, String price,
-                              String clientOrderId, Boolean postOnly, String stopPrice,
-                              Boolean hidden, Boolean trailing, Boolean immediateOrCancel) throws IOException {
+                              String clientOrderId, Boolean postOnly, Boolean immediateOrCancel) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("currencyPair", currencyPair);
         params.put("amount", amount);
         params.put("price", price);
         if (clientOrderId != null) params.put("clientOrderId", clientOrderId);
         if (postOnly != null) params.put("postOnly", postOnly ? "1" : "0");
-        if (stopPrice != null) params.put("stopPrice", stopPrice);
-        if (hidden != null) params.put("hidden", hidden ? "1" : "0");
-        if (trailing != null) params.put("trailing", trailing ? "1" : "0");
         if (immediateOrCancel != null) params.put("immediateOrCancel", immediateOrCancel ? "1" : "0");
         return httpClient.postPrivate("/buyLimit", params);
     }
@@ -347,14 +340,10 @@ public class CoinmateClient implements AutoCloseable {
      * @param price Price per unit
      * @param clientOrderId Optional client order ID
      * @param postOnly Optional post only flag
-     * @param stopPrice Optional stop price
-     * @param hidden Optional hidden flag
-     * @param trailing Optional trailing flag
      * @param immediateOrCancel Optional immediate or cancel flag
      */
     public JsonObject replaceByBuyLimit(String orderId, String currencyPair, String amount, String price,
-                                       String clientOrderId, Boolean postOnly, String stopPrice,
-                                       Boolean hidden, Boolean trailing, Boolean immediateOrCancel) throws IOException {
+                                       String clientOrderId, Boolean postOnly, Boolean immediateOrCancel) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
         params.put("currencyPair", currencyPair);
@@ -362,9 +351,6 @@ public class CoinmateClient implements AutoCloseable {
         params.put("price", price);
         if (clientOrderId != null) params.put("clientOrderId", clientOrderId);
         if (postOnly != null) params.put("postOnly", postOnly ? "1" : "0");
-        if (stopPrice != null) params.put("stopPrice", stopPrice);
-        if (hidden != null) params.put("hidden", hidden ? "1" : "0");
-        if (trailing != null) params.put("trailing", trailing ? "1" : "0");
         if (immediateOrCancel != null) params.put("immediateOrCancel", immediateOrCancel ? "1" : "0");
         return httpClient.postPrivate("/replaceByBuyLimit", params);
     }
@@ -379,23 +365,16 @@ public class CoinmateClient implements AutoCloseable {
      * @param price Price per unit
      * @param clientOrderId Optional client order ID
      * @param postOnly Optional post only flag
-     * @param stopPrice Optional stop price
-     * @param hidden Optional hidden flag
-     * @param trailing Optional trailing flag
      * @param immediateOrCancel Optional immediate or cancel flag
      */
     public JsonObject sellLimit(String currencyPair, String amount, String price,
-                               String clientOrderId, Boolean postOnly, String stopPrice,
-                               Boolean hidden, Boolean trailing, Boolean immediateOrCancel) throws IOException {
+                               String clientOrderId, Boolean postOnly, Boolean immediateOrCancel) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("currencyPair", currencyPair);
         params.put("amount", amount);
         params.put("price", price);
         if (clientOrderId != null) params.put("clientOrderId", clientOrderId);
         if (postOnly != null) params.put("postOnly", postOnly ? "1" : "0");
-        if (stopPrice != null) params.put("stopPrice", stopPrice);
-        if (hidden != null) params.put("hidden", hidden ? "1" : "0");
-        if (trailing != null) params.put("trailing", trailing ? "1" : "0");
         if (immediateOrCancel != null) params.put("immediateOrCancel", immediateOrCancel ? "1" : "0");
         return httpClient.postPrivate("/sellLimit", params);
     }
@@ -411,14 +390,10 @@ public class CoinmateClient implements AutoCloseable {
      * @param price Price per unit
      * @param clientOrderId Optional client order ID
      * @param postOnly Optional post only flag
-     * @param stopPrice Optional stop price
-     * @param hidden Optional hidden flag
-     * @param trailing Optional trailing flag
      * @param immediateOrCancel Optional immediate or cancel flag
      */
     public JsonObject replaceBySellLimit(String orderId, String currencyPair, String amount, String price,
-                                        String clientOrderId, Boolean postOnly, String stopPrice,
-                                        Boolean hidden, Boolean trailing, Boolean immediateOrCancel) throws IOException {
+                                        String clientOrderId, Boolean postOnly, Boolean immediateOrCancel) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
         params.put("currencyPair", currencyPair);
@@ -426,9 +401,6 @@ public class CoinmateClient implements AutoCloseable {
         params.put("price", price);
         if (clientOrderId != null) params.put("clientOrderId", clientOrderId);
         if (postOnly != null) params.put("postOnly", postOnly ? "1" : "0");
-        if (stopPrice != null) params.put("stopPrice", stopPrice);
-        if (hidden != null) params.put("hidden", hidden ? "1" : "0");
-        if (trailing != null) params.put("trailing", trailing ? "1" : "0");
         if (immediateOrCancel != null) params.put("immediateOrCancel", immediateOrCancel ? "1" : "0");
         return httpClient.postPrivate("/replaceBySellLimit", params);
     }

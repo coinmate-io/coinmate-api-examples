@@ -12,12 +12,9 @@ public class Order {
     private BigDecimal price;
     private BigDecimal amount;
     private String currencyPair;
-    private BigDecimal stopPrice;
     private BigDecimal originalAmount;
     private String status; // OPEN, CANCELLED, FILLED, PARTIALLY_FILLED
     private String orderTradeType; // LIMIT, INSTANT
-    private Boolean hidden;
-    private Boolean trailing;
     private String clientOrderId;
 
     public String getId() {
@@ -68,14 +65,6 @@ public class Order {
         this.currencyPair = currencyPair;
     }
 
-    public BigDecimal getStopPrice() {
-        return stopPrice;
-    }
-
-    public void setStopPrice(BigDecimal stopPrice) {
-        this.stopPrice = stopPrice;
-    }
-
     public BigDecimal getOriginalAmount() {
         return originalAmount;
     }
@@ -98,22 +87,6 @@ public class Order {
 
     public void setOrderTradeType(String orderTradeType) {
         this.orderTradeType = orderTradeType;
-    }
-
-    public Boolean getHidden() {
-        return hidden;
-    }
-
-    public void setHidden(Boolean hidden) {
-        this.hidden = hidden;
-    }
-
-    public Boolean getTrailing() {
-        return trailing;
-    }
-
-    public void setTrailing(Boolean trailing) {
-        this.trailing = trailing;
     }
 
     public String getClientOrderId() {
