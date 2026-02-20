@@ -184,10 +184,7 @@ readonly class Order
         public string $currencyPair,
         public ?string $status,
         public string $orderTradeType,
-        public ?float $stopPrice = null,
         public ?float $originalAmount = null,
-        public ?bool $hidden = null,
-        public ?bool $trailing = null,
         public ?string $clientOrderId = null
     ) {}
 
@@ -202,10 +199,7 @@ readonly class Order
             $data['currencyPair'],
             $data['status'] ?? null,
             $data['orderTradeType'],
-            isset($data['stopPrice']) ? (float) $data['stopPrice'] : null,
             isset($data['originalAmount']) ? (float) $data['originalAmount'] : null,
-            $data['hidden'] ?? null,
-            $data['trailing'] ?? null,
             $data['clientOrderId'] ?? null
         );
     }
@@ -394,9 +388,6 @@ class OrderRequest
         public ?string $total = null,
         public ?string $clientOrderId = null,
         public ?bool $postOnly = null,
-        public ?string $stopPrice = null,
-        public ?bool $hidden = null,
-        public ?bool $trailing = null,
         public ?bool $immediateOrCancel = null
     ) {}
 
@@ -415,9 +406,6 @@ class OrderRequest
         if ($this->total !== null) $params['total'] = $this->total;
         if ($this->clientOrderId !== null) $params['clientOrderId'] = $this->clientOrderId;
         if ($this->postOnly !== null) $params['postOnly'] = $this->postOnly ? '1' : '0';
-        if ($this->stopPrice !== null) $params['stopPrice'] = $this->stopPrice;
-        if ($this->hidden !== null) $params['hidden'] = $this->hidden ? '1' : '0';
-        if ($this->trailing !== null) $params['trailing'] = $this->trailing ? '1' : '0';
         if ($this->immediateOrCancel !== null) $params['immediateOrCancel'] = $this->immediateOrCancel ? '1' : '0';
 
         return $params;

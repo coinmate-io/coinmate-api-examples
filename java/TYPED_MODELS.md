@@ -166,9 +166,6 @@ CoinmateResponse<OrderResult> response = client.buyLimit(
     "1800000",           // price
     "my-order-123",      // client order ID
     false,               // post only
-    null,                // stop price
-    false,               // hidden
-    false,               // trailing
     false                // immediate or cancel
 );
 ```

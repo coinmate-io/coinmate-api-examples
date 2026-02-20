@@ -88,12 +88,9 @@ export interface Order {
   price: number;
   amount: number;
   currencyPair: string;
-  stopPrice?: number;
   originalAmount?: number;
   status: 'OPEN' | 'CANCELLED' | 'FILLED' | 'PARTIALLY_FILLED';
   orderTradeType: 'LIMIT' | 'INSTANT';
-  hidden?: boolean;
-  trailing?: boolean;
   clientOrderId?: string;
 }
 
@@ -218,8 +215,5 @@ export interface OrderRequest {
   total?: string;
   clientOrderId?: string;
   postOnly?: boolean;
-  stopPrice?: string;
-  hidden?: boolean;
-  trailing?: boolean;
   immediateOrCancel?: boolean;
 }

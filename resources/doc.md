@@ -3,6 +3,8 @@ HOST: https://coinmate.io/api
 
 # CoinMate.io Trading Portal API
 
+Examples in Java, TypeScript, Python, PHP (https://github.com/coinmate-io/coinmate-api-examples)
+
 Security
 ===========
 
@@ -59,8 +61,8 @@ Coinmate offers standard Websocket API in **two versions**.
 **Second version (2.0)** offers connection on **single URL** and client needs to send messages described below to subscribe/unsubscribe concrete channels. **The URL for connection to Coinmate Websocket API version 2.0 is wss://coinmate.io/api/websocket**.
 After successful connection to Websocket API of version 2.0, the client can subscribe to desired channels. The message has following JSON format:
 
-- event: subscribe
-- data:
+ - event: subscribe
+ - data:
     - channel - [channelName]
     - clientId (only for private channels)
     - publicKey (only for private channels)
@@ -68,7 +70,7 @@ After successful connection to Websocket API of version 2.0, the client can subs
     - nonce (only for private channels)
 
 There is example subscribe message:
-{"event":"subscribe", "data":{"channel":"trades-BTC_EUR"}}
+ {"event":"subscribe", "data":{"channel":"trades-BTC_EUR"}}
 
 Channel names are listed in examples below. The event for unsubscription is **unsubscribe**.
 The authentication data for private channels is standard data described in <a href="https://coinmate.docs.apiary.io/#introduction/security">Security</a> section.
@@ -77,12 +79,12 @@ Please refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/API/We
 You can also find an example for each channel below.
 
 Every websocket message sent by coinmate is one of **listed types of events**:
-- data - contains payload field with requested data
-- ping - sent every x seconds to keep the connection live
-- pong - sent as a response to ping message from client (not mandatory to keep connection live)
-- subscribe_success - sent as a response to successful subscription
-- unsubscribe_success - sent as a response to successful unsubscription
-- error - sent as a response to invalid message and contains message field with description
+ - data - contains payload field with requested data
+ - ping - sent every x seconds to keep the connection live
+ - pong - sent as a response to ping message from client (not mandatory to keep connection live)
+ - subscribe_success - sent as a response to successful subscription
+ - unsubscribe_success - sent as a response to successful unsubscription
+ - error - sent as a response to invalid message and contains message field with description
 
 The XChange library (<a href="https://github.com/knowm/XChange">https://github.com/knowm/XChange</a>) also supports websockets.
 
@@ -171,18 +173,11 @@ ACCOUNT_ID is ID of account (the same as clientID from authentication data)
 - List of user orders
     - amount - Order size in first currency (e.g. in BTC for BTC_EUR currency pair)
     - date - Order creation time as unix timestamp. Timestamp is in milliseconds.
-    - hidden - Flag indicating that order is or is not hidden. Valid flag value is true or false
     - id - Order ID
     - clientOrderId - Order ID specified by API client
     - original - Original order size.
     - price - Price
-    - type - Order type e.g. "BUY", "BUY STOP", "SELL", "SELL STOP"
-    - stopPrice - Stop loss price. Attribute available just for stop loss orders
-    - trailing - Indicates whether stop loss order is also trailing. Valid flag value is true or false
-    - originalStopPrice - In case of stop loss trailing order holds stop price specified during order creation. Attribute available just for stop loss trailing orders
-    - priceAtStopLossCreation - In case of stop loss trailing order holds market price at time of during order creation. Attribute available just for stop loss trailing orders
-    - priceAtStopLossUpdate - In case of stop loss trailing order holds market price at time of last stop price update. Attribute available just for stop loss trailing orders
-    - trailingUpdatedTimestamp - Time of the last update of stop price. Time is unix timestamp in milliseconds Timestamp is in milliseconds. Attribute available just for stop loss trailing orders
+    - type - Order type e.g. "BUY", "SELL"
     - currencyPair - Currency pair.
     - orderChangePushEvent - REMOVAL, UPDATE, CREATION or SNAPSHOT
 
@@ -267,16 +262,23 @@ ACCOUNT_ID is ID of account (the same as clientID from authentication data)
 
 Changelog
 ===========
+- 2026-02-20
+   - Removed stop loss order parameters from documentation (feature was disabled since 2025-02-27)
+      - Removed input parameters `stopPrice` and `trailing` from `/buyLimit`, `/sellLimit`, `/replaceByBuyLimit`, `/replaceBySellLimit`
+      - Removed stop loss related output fields from `/orderHistory`, `/openOrders`, `/order`, `/orderById`
+   - Removed `hidden` order parameter from documentation
+      - Removed input parameter `hidden` from `/buyLimit`, `/sellLimit`, `/replaceByBuyLimit`, `/replaceBySellLimit`
+      - Removed `hidden` output field from `/orderHistory`, `/openOrders`
 - 2025-06-16
-    - Added new endpoint POST `/bankWireWithdrawal`
-        - Allows to withdraw funds via bank wire transfer
+   - Added new endpoint POST `/bankWireWithdrawal`
+      - Allows to withdraw funds via bank wire transfer
 - 2025-02-27
-    - Disabled stop loss orders
-        - requests using parameter stopPrice will receive error Not implemented
-        - Affected Endpoints: `/buyLimit`,  `/sellLimit`, `/replaceByBuyLimit`, `/replaceBySellLimit`
-    - Added new endpoint POST `/currencies`
+   - Disabled stop loss orders
+      - requests using parameter stopPrice will receive error Not implemented
+      - Affected Endpoints: `/buyLimit`,  `/sellLimit`, `/replaceByBuyLimit`, `/replaceBySellLimit`
+   - Added new endpoint POST `/currencies`
 - 2025-02-11
-    - Updated Transfers / transferStatus enum description
+   - Updated Transfers / transferStatus enum description
 
 
 #Group Request limits
@@ -296,22 +298,22 @@ Info about each currency has following attributes:
 - withdrawEnabled - boolean value indicating if withdrawals are enabled
 - precision - maximum number of decimals you may use when entering amount
 - networks - list of supported networks
-    - network - network name
-    - deposit
-        - enabled - boolean value indicating if deposits are enabled
-        - fixFee - fixed fee for deposit
-        - percentageFee - if it is greater than zero, the fee is calculated as a percentage of amount
-        - minAmount - minimum deposit amount
-        - minConfirmations - maximum deposit confirmations
-    - withdraw
-        - enabled - boolean value indicating if withdrawals are enabled
-        - requiresTag - boolean value indicating if withdrawal requires tag
-        - fee - list of possible fee variant
-            - fixFee - fixed fee for withdraw
-            - percentageFee - if it is greater than zero, the fee is calculated as a percentage of amount
-            - variant - withdraw variant
-        - minAmount - minimum withdraw amount
-        - max24hLimit - maximum withdraw amount per day
+  - network - network name
+  - deposit
+    - enabled - boolean value indicating if deposits are enabled
+    - fixFee - fixed fee for deposit
+    - percentageFee - if it is greater than zero, the fee is calculated as a percentage of amount
+    - minAmount - minimum deposit amount
+    - minConfirmations - maximum deposit confirmations
+  - withdraw
+    - enabled - boolean value indicating if withdrawals are enabled
+    - requiresTag - boolean value indicating if withdrawal requires tag
+    - fee - list of possible fee variant
+      - fixFee - fixed fee for withdraw
+      - percentageFee - if it is greater than zero, the fee is calculated as a percentage of amount
+      - variant - withdraw variant
+    - minAmount - minimum withdraw amount
+    - max24hLimit - maximum withdraw amount per day
 
 ## Get currencies [/currencies]
 **USER OPERATION**
@@ -543,8 +545,6 @@ Result items are ordered by timestamp.
 | orderId | If defined, returns only BUY and SELL transactions with given orderId |
 | timestampFrom | If defined, returns only transactions with timestamp greater than or equals to given timestampFrom (as unix timestamp in milliseconds) |
 | timestampTo | If defined, returns only transactions with timestamp lower than or equals to given timestampTo (as unix timestamp in milliseconds)|
-| archived | If defined with 1 or true, returns transactions from archived data (usually older than 2 years) |
-
 
 ### POST [POST]
 + Request (application/x-www-form-urlencoded)
@@ -598,26 +598,26 @@ Returns user's trade history.
 
 Transfer has following attributes:
 
-- id - transaction id
-- fee - transfer fee
-- transferType - transfer type (WITHDRAWAL,DEPOSIT)
-- timestamp - timestamp in milliseconds
-- transferStatus - status of the transfer
-    - NEW - starting state, ready for processing
-    - BEFORE_SEND - short lived state, for internal retry mechanism
-    - SENT - withdrawal was sent, waiting for confirmations
-    - PENDING - transfer exceeded verification transfer limits and is waiting for renewal or waiting for confirmation from 3rd party service
-    - WAITING - transfer is waiting for manual approval
-    - ERROR
-    - CANCELLED
-    - COMPLETED
-    - VERIFIED - COMPLETED state with extra manual verification/approval
-- amount - transfer amount
-- amountCurrency - currency
-- walletType - wallet type (BANK_WIRE, BTC, LTC ...)
-- txid - txid of the transfer in blockchain. Only for virtual currency transfers.
-- destination - virtual currency address. Only for virtual currency transfers.
-- destinationTag - XRP destination tag. Only for XRP transfers.
+ - id - transaction id
+ - fee - transfer fee
+ - transferType - transfer type (WITHDRAWAL,DEPOSIT)
+ - timestamp - timestamp in milliseconds
+ - transferStatus - status of the transfer
+   - NEW - starting state, ready for processing
+   - BEFORE_SEND - short lived state, for internal retry mechanism
+   - SENT - withdrawal was sent, waiting for confirmations
+   - PENDING - transfer exceeded verification transfer limits and is waiting for renewal or waiting for confirmation from 3rd party service
+   - WAITING - transfer is waiting for manual approval
+   - ERROR
+   - CANCELLED
+   - COMPLETED
+   - VERIFIED - COMPLETED state with extra manual verification/approval
+ - amount - transfer amount
+ - amountCurrency - currency
+ - walletType - wallet type (BANK_WIRE, BTC, LTC ...)
+ - txid - txid of the transfer in blockchain. Only for virtual currency transfers.
+ - destination - virtual currency address. Only for virtual currency transfers.
+ - destinationTag - XRP destination tag. Only for XRP transfers.
 
 ## Get transfer [/transfer]
 **USER OPERATION**
@@ -691,18 +691,8 @@ It will return list of orders.
 | remainingAmount | Amount of the order that has not been matched. |
 | originalAmount | Original order size. |
 | status | Status of order. Possible outcomes : "CANCELLED", "FILLED", "PARTIALLY_FILLED", "OPEN". |
-| orderTradeType | Order trade type (LIMIT, INSTANT, QUICK, LIMIT_STOP) |
-| stopPrice | Stop loss price |
-| trailing | Indicates whether stop loss order is also trailing |
-| trailingUpdatedTimestamp | Time of the last update of stop price (or null if it has not been updated yet). Time is unix timestamp in milliseconds |
-| originalStopPrice | In case of stop loss trailing order holds stop price specified during order creation |
-| marketPriceAtLastUpdate | In case of stop loss trailing order holds market price at time of last stop price update  |
-| marketPriceAtOrderCreation | In case of stop loss trailing order holds market price at time of during order creation |
-| hidden | Indicates whether order is hidden |
+| orderTradeType | Order trade type (LIMIT, INSTANT, QUICK) |
 | avgPrice | Average price of order across all fills |
-| trailing | Indicates whether stop loss order is also trailing |
-| stopLossOrderId | Stop-loss order ID that was replaced by a system-generated market order in case when a stopPrice (of Stop-loss order) was breached |
-| originalOrderId | Id of the original (cancelled) stop-loss order |
 
 ### POST [POST]
 + Request (application/x-www-form-urlencoded)
@@ -711,7 +701,7 @@ It will return list of orders.
 
 + Response 200 (application/json)
 
-        {"error":false,"errorMessage":null,"data":[{"id":3729783,"timestamp":1495529716367,"type":"SELL","price":7700,"remainingAmount":0,"originalAmount":0.23,"status":"FILLED","stopPrice":null,"orderTradeType":"LIMIT","hidden":false,"trailing":false,"stopLossOrderId":null},{"id":3729782,"timestamp":1495529701629,"type":"BUY","price":5000,"remainingAmount":0.123,"originalAmount":0.123,"status":"OPEN","stopPrice":null,"orderTradeType":"LIMIT","hidden":false,"trailing":false,"stopLossOrderId":null},{"id":3729781,"timestamp":1495529680993,"type":"BUY","price":20000,"remainingAmount":0,"originalAmount":0.23,"status":"FILLED","stopPrice":null,"orderTradeType":"LIMIT","hidden":false,"trailing":false,"stopLossOrderId":null},{"id":3729780,"timestamp":1495529672260,"type":"SELL","price":10000,"remainingAmount":0,"originalAmount":0.1,"status":"FILLED","stopPrice":null,"orderTradeType":"LIMIT","hidden":false,"trailing":false,"stopLossOrderId":null},{"id":3691072,"timestamp":1483532563344,"type":"BUY","price":100,"remainingAmount":0,"originalAmount":0.5,"status":"FILLED","stopPrice":null,"orderTradeType":"LIMIT","hidden":false,"trailing":false,"stopLossOrderId":null,"originalOrderId":null}]}
+        {"error":false,"errorMessage":null,"data":[{"id":3729783,"timestamp":1495529716367,"type":"SELL","price":7700,"remainingAmount":0,"originalAmount":0.23,"status":"FILLED","orderTradeType":"LIMIT"},{"id":3729782,"timestamp":1495529701629,"type":"BUY","price":5000,"remainingAmount":0.123,"originalAmount":0.123,"status":"OPEN","orderTradeType":"LIMIT"},{"id":3729781,"timestamp":1495529680993,"type":"BUY","price":20000,"remainingAmount":0,"originalAmount":0.23,"status":"FILLED","orderTradeType":"LIMIT"},{"id":3729780,"timestamp":1495529672260,"type":"SELL","price":10000,"remainingAmount":0,"originalAmount":0.1,"status":"FILLED","orderTradeType":"LIMIT"},{"id":3691072,"timestamp":1483532563344,"type":"BUY","price":100,"remainingAmount":0,"originalAmount":0.5,"status":"FILLED","orderTradeType":"LIMIT"}]}
 
 
 ## Get open orders [/openOrders]
@@ -732,18 +722,8 @@ Returns a list of open orders.
 | currencyPair | Currency pair identifier |
 | price | Price. |
 | amount | Amount |
-| orderTradeType | Order trade type (LIMIT, MARKET, LIMIT_STOP) |
-| stopPrice | Stop loss price |
-| trailing | Indicates whether stop loss order is also trailing |
-| trailingUpdatedTimestamp  | Time of the last update of stop price (or null if it has not been updated yet). Time is unix timestamp in milliseconds |
-| originalStopPrice | In case of stop loss trailing order holds stop price specified during order creation |
-| marketPriceAtLastUpdate | In case of stop loss trailing order holds market price at time of last stop price update  |
-| marketPriceAtOrderCreation | In case of stop loss trailing order holds market price at time of during order creation |
-| hidden | Indicates whether order is hidden |
-| trailing | Indicates whether stop loss order is also trailing |
+| orderTradeType | Order trade type (LIMIT, MARKET) |
 | clientOrderId | Order ID specified by API client |
-| stopLossOrderId | Stop-loss order ID that was replaced by a system-generated market order in case when a stopPrice (of Stop-loss order) was breached |
-| originalOrderId | Id of the original (cancelled) stop-loss order |
 
 ### POST [POST]
 + Request (application/x-www-form-urlencoded)
@@ -752,7 +732,7 @@ Returns a list of open orders.
 
 + Response 200 (application/json)
 
-        {"error":false,"errorMessage":null,"data":[{"id":32780,"timestamp":1404383652640,"type":"SELL","currencyPair":"BTC_EUR","price":1000000000,"amount":1,"stopPrice":null,"orderTradeType":"LIMIT","hidden":false,"trailing":false,"stopLossOrderId":null},{"id":32784,"timestamp":1404383662360,"type":"BUY","currencyPair":"BTC_CZK","price":1000000,"amount":1,"stopPrice":null,"orderTradeType":"LIMIT","hidden":false, "trailing":false},{"id":32807,"timestamp":1404389352547,"type":"BUY","currencyPair":"BTC_EUR","price":1,"amount":1,"stopPrice":null,"orderTradeType":"LIMIT","hidden":false, "trailing":false},{"id":32810,"timestamp":1404389358072,"type":"SELL","currencyPair":"LTC_BTC","price":1000000,"amount":1,"stopPrice":null,"orderTradeType":"LIMIT","hidden":false,"trailing":false,"stopLossOrderId":null},{"id":32705,"timestamp":1404315812833,"type":"SELL","currencyPair":"BTC_EUR","price":1000,"amount":0.975,"stopPrice":null,"orderTradeType":"LIMIT","hidden":false, "trailing":false,"stopLossOrderId":null},{"id":32423,"timestamp":1404306314334,"type":"SELL","currencyPair":"BTC_EUR","price":1000,"amount":1.22155851,"stopPrice":null,"orderTradeType":"LIMIT","hidden":false,"trailing":false,"clientOrderId":null,"stopLossOrderId":null,"originalOrderId":null}]}
+        {"error":false,"errorMessage":null,"data":[{"id":32780,"timestamp":1404383652640,"type":"SELL","currencyPair":"BTC_EUR","price":1000000000,"amount":1,"orderTradeType":"LIMIT"},{"id":32784,"timestamp":1404383662360,"type":"BUY","currencyPair":"BTC_CZK","price":1000000,"amount":1,"orderTradeType":"LIMIT"},{"id":32807,"timestamp":1404389352547,"type":"BUY","currencyPair":"BTC_EUR","price":1,"amount":1,"orderTradeType":"LIMIT"},{"id":32810,"timestamp":1404389358072,"type":"SELL","currencyPair":"LTC_BTC","price":1000000,"amount":1,"orderTradeType":"LIMIT"},{"id":32705,"timestamp":1404315812833,"type":"SELL","currencyPair":"BTC_EUR","price":1000,"amount":0.975,"orderTradeType":"LIMIT"},{"id":32423,"timestamp":1404306314334,"type":"SELL","currencyPair":"BTC_EUR","price":1000,"amount":1.22155851,"orderTradeType":"LIMIT","clientOrderId":null}]}
 
 ## Get order by clientOrderId [/order]
 **USER OPERATION**
@@ -773,12 +753,8 @@ Returns a list of orders with given clientOrderId.
 | remainingAmount | Amount of the order that has not been matched. |
 | originalAmount | Original order size. |
 | cumulativeAmount | Cumulative amount on trades. |
-| stopPrice | Stop price of stop loss order. |
 | status | Status of order. Possible outcomes : "CANCELLED", "FILLED", "PARTIALLY_FILLED", "OPEN". |
 | avgPrice | Average price of order across all fills. |
-| trailing | Indicates whether stop loss order is also trailing |
-| stopLossOrderId | Stop-loss order ID that was replaced by a system-generated market order in case when a stopPrice (of Stop-loss order) was breached |
-| originalOrderId | Id of the original (cancelled) stop-loss order |
 | trades | Trades which fulfilled the order. |
 
 ### POST [POST]
@@ -788,7 +764,7 @@ Returns a list of orders with given clientOrderId.
 
 + Response 200 (application/json)
 
-        { "error":false, "errorMessage":null, "data":[ { "id":2227, "timestamp":1645540411407, "trailingUpdatedTimestamp":null, "type":"BUY", "price":1, "remainingAmount":0, "originalAmount":1.001, "cumulativeAmount":1, "stopPrice":null, "originalStopPrice":null, "marketPriceAtLastUpdate":null, "marketPriceAtOrderCreation":null, "status":"FILLED", "orderTradeType":"LIMIT", "hidden":false, "avgPrice":1.0, "trailing":false, "stopLossOrderId":null, "originalOrderId":null, "trades":[ { "transactionId":11620, "createdTimestamp":1651824240638, "currencyPair":"BTC_CZK", "type":"SELL", "orderType":"QUICK", "orderId":2642, "amount":1, "price":205825.242, "fee":0, "feeType":"TAKER" } ] },{ "id":2225, "timestamp":1645540409849, "trailingUpdatedTimestamp":null, "type":"BUY", "price":1, "remainingAmount":1.001, "originalAmount":1.001, "cumulativeAmount":1, "stopPrice":1000000, "originalStopPrice":null, "marketPriceAtLastUpdate":null, "marketPriceAtOrderCreation":null, "status":"CANCELLED", "orderTradeType":"LIMIT_STOP", "hidden":true, "avgPrice":null, "trailing":false, "stopLossOrderId":2230, "originalOrderId":null, "trades":[ { "transactionId":11620, "createdTimestamp":1651824240638, "currencyPair":"BTC_CZK", "type":"SELL", "orderType":"QUICK", "orderId":2642, "amount":1, "price":205825.242, "fee":0, "feeType":"TAKER" } ] } ] }
+        { "error":false, "errorMessage":null, "data":[ { "id":2227, "timestamp":1645540411407, "type":"BUY", "price":1, "remainingAmount":0, "originalAmount":1.001, "cumulativeAmount":1, "status":"FILLED", "orderTradeType":"LIMIT", "avgPrice":1.0, "trades":[ { "transactionId":11620, "createdTimestamp":1651824240638, "currencyPair":"BTC_CZK", "type":"SELL", "orderType":"QUICK", "orderId":2642, "amount":1, "price":205825.242, "fee":0, "feeType":"TAKER" } ] } ] }
 
 ## Get order by orderId [/orderById]
 **USER OPERATION**
@@ -808,12 +784,8 @@ Returns a order with given orderId
 | remainingAmount | Amount of the order that has not been matched. |
 | originalAmount | Original order size. |
 | cumulativeAmount | Cumulative amount on trades. |
-| stopPrice | Stop price of stop loss order. |
 | status | Status of order. Possible outcomes : "CANCELLED", "FILLED", "PARTIALLY_FILLED", "OPEN". |
 | avgPrice | Average price of order across all fills. |
-| trailing | Indicates whether stop loss order is also trailing |
-| stopLossOrderId | Stop-loss order ID that was replaced by a system-generated market order in case when a stopPrice (of Stop-loss order) was breached |
-| originalOrderId | Id of the original (cancelled) stop-loss order |
 | trades | Trades which fulfilled the order. |
 
 ### POST [POST]
@@ -823,7 +795,7 @@ Returns a order with given orderId
 
 + Response 200 (application/json)
 
-        { "error":false, "errorMessage":null, "data": { "id":2642, "timestamp":1651824240630, "trailingUpdatedTimestamp":null, "type":"SELL", "price":null, "remainingAmount":0, "originalAmount":1, "cumulativeAmount": 1, "stopPrice":null, "originalStopPrice":null, "marketPriceAtLastUpdate":null, "marketPriceAtOrderCreation":null, "status":"FILLED", "orderTradeType":"QUICK", "hidden":false, "avgPrice":200000, "trailing":false, "stopLossOrderId":null, "originalOrderId":null "trades" : [ { "transactionId":11620, "createdTimestamp":1651824240638, "currencyPair":"BTC_CZK", "type":"SELL", "orderType":"QUICK", "orderId":2642, "amount":1, "price":205825.242, "fee":0, "feeType":"TAKER" } ] } }
+        { "error":false, "errorMessage":null, "data": { "id":2642, "timestamp":1651824240630, "type":"SELL", "price":null, "remainingAmount":0, "originalAmount":1, "cumulativeAmount": 1, "status":"FILLED", "orderTradeType":"QUICK", "avgPrice":200000, "trades" : [ { "transactionId":11620, "createdTimestamp":1651824240638, "currencyPair":"BTC_CZK", "type":"SELL", "orderType":"QUICK", "orderId":2642, "amount":1, "price":205825.242, "fee":0, "feeType":"TAKER" } ] } }
 
 ## Cancel order [/cancelOrder]
 **USER OPERATION**
@@ -896,9 +868,7 @@ Cancels open order. Operation is available from version 1.3
 ## Buy limit order [/buyLimit]
 **USER OPERATION**
 
-Creates new order for buying of type limit order. If stop loss price is set creates limit_stop order.
-
-When current price crosses stopPrice, market buy is created for amount * price.
+Creates new order for buying of type limit order.
 
 | Required input parameters                |                           |
 |----------------------------------|---------------------------|
@@ -908,9 +878,6 @@ When current price crosses stopPrice, market buy is created for amount * price.
 
 | Optional input parameters                |                           |
 |----------------------------------|---------------------------|
-| stopPrice<br>**DISABLED** | Stop loss price. Must be higher than current price.|
-| trailing | Flag indicating that stop loss order should be created as trailing. Valid flag value is 0 or 1. Default value is 0 |
-| hidden | Flag indicating that order should be created as hidden. Valid flag value is 0 or 1. Default value is 0
 | immediateOrCancel | In case the flag is set: if limit order is not fully settled immediately the remaining part of the order is cancelled at the end of request. Valid flag value is 0 or 1. Default value is 0
 | postOnly | Post-Only (also called Maker-Or-Cancel) flag - in case the flag is set the entire order is either placed as maker, or if any part of the order can be filled immediately, the entire order is canceled (ensuring you pay the maker fee only). Valid flag value is 0 or 1. Default value is 0
 | clientOrderId | Numeric client ID of order used to access order in case of not receiving order id.|
@@ -944,9 +911,6 @@ Replace operation consists of two operations - cancel and create. At first cance
 
 | Optional input parameters                |                           |
 |----------------------------------|---------------------------|
-| stopPrice<br>**DISABLED** | Stop loss price. Must be higher than current price.|
-| trailing | Flag indicating that stop loss order should be created as trailing. Valid flag value is 0 or 1. Default value is 0 |
-| hidden | Flag indicating that order should be created as hidden. Valid flag value is 0 or 1. Default value is 0
 | immediateOrCancel | In case the flag is set: if limit order is not fully settled immediately the remaining part of the order is cancelled at the end of request. Valid flag value is 0 or 1. Default value is 0
 | postOnly | Post-Only (also called Maker-Or-Cancel) flag - in case the flag is set the entire order is either placed as maker, or if any part of the order can be filled immediately, the entire order is canceled (ensuring you pay the maker fee only). Valid flag value is 0 or 1. Default value is 0
 | clientOrderId | Id (number) of order used to access order in case of not receiving order id. Please do not specify more than 20 digits|
@@ -971,9 +935,7 @@ Replace operation consists of two operations - cancel and create. At first cance
 ## Sell limit order [/sellLimit]
 **USER OPERATION**
 
-Creates new order for selling of type limit order. If stop loss price is set creates limit_stop order.
-
-When current price crosses stopPrice, market sell is created for amount.
+Creates new order for selling of type limit order.
 
 | Required input parameters                |                           |
 |----------------------------------|---------------------------|
@@ -983,9 +945,6 @@ When current price crosses stopPrice, market sell is created for amount.
 
 | Optional input parameters                |                           |
 |----------------------------------|---------------------------|
-| stopPrice<br>**DISABLED** | Stop loss price. Must be lower than current price.|
-| trailing | Flag indicating that stop loss order should be created as trailing. Valid flag value is 0 or 1. Default value is 0 |
-| hidden | Flag indicating that order should be created as hidden. Valid flag value is 0 or 1. Default value is 0
 | immediateOrCancel | In case the flag is set: if limit order is not fully settled immediately the remaining part of the order is cancelled at the end of request. Valid flag value is 0 or 1. Default value is 0
 | postOnly | Post-Only (also called Maker-Or-Cancel) flag - in case the flag is set the entire order is either placed as maker, or if any part of the order can be filled immediately, the entire order is canceled (ensuring you pay the maker fee only). Valid flag value is 0 or 1. Default value is 0
 | clientOrderId | Numeric client ID of order used to access order in case of not receiving order id.|
@@ -1020,9 +979,6 @@ Replace operation consists of two operations - cancel and create. At first cance
 
 | Optional input parameters                |                           |
 |----------------------------------|---------------------------|
-| stopPrice<br>**DISABLED** | Stop loss price. Must be lower than current price.|
-| trailing | Flag indicating that stop loss order should be created as trailing. Valid flag value is 0 or 1. Default value is 0 |
-| hidden | Flag indicating that order should be created as hidden. Valid flag value is 0 or 1. Default value is 0
 | immediateOrCancel | In case the flag is set: if limit order is not fully settled immediately the remaining part of the order is cancelled at the end of request. Valid flag value is 0 or 1. Default value is 0
 | postOnly | Post-Only (also called Maker-Or-Cancel) flag - in case the flag is set the entire order is either placed as maker, or if any part of the order can be filled immediately, the entire order is canceled (ensuring you pay the maker fee only). Valid flag value is 0 or 1. Default value is 0
 | clientOrderId | Id (number) of order used to access order in case of not receiving order id. Please do not specify more than 20 digits|
@@ -1756,12 +1712,12 @@ For EUR withdrawals:
 
     + Body
 
-      {
-      "currencyName": "CZK",
-      "amount": 1000,
-      "accountNumber": "123456789",
-      "bankCode": "0800"
-      }
+        {
+            "currencyName": "CZK",
+            "amount": 1000,
+            "accountNumber": "123456789",
+            "bankCode": "0800"
+        }
 
 + Response 200 (application/json)
 
@@ -1780,12 +1736,12 @@ For EUR withdrawals:
             X-Coinmate-Nonce:15472079411
 
     + Body
-      {
-      "currencyName": "EUR",
-      "amount": 500,
-      "accountNumber": "DE89370400440532013000",
-      "bankCode": "DEUTDEFF"
-      }
+        {
+            "currencyName": "EUR",
+            "amount": 500,
+            "accountNumber": "DE89370400440532013000",
+            "bankCode": "DEUTDEFF"
+        }
 
 + Response 200 (application/json)
 
